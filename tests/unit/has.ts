@@ -48,13 +48,13 @@ registerSuite({
 
 		'throws when no value in cache and no test'() {
 			const feature: string = 'abc';
-			let err: RangeError;
+			let err: Error;
 			try {
 				has(feature);
 			} catch (e) {
 				err = e;
 			}
-			assert.isTrue(err instanceof RangeError);
+			assert.isTrue(err instanceof Error);
 			assert.equal('abc does not exist', err.message);
 		},
 
@@ -126,9 +126,16 @@ registerSuite({
 				}, TypeError);
 			},
 
-			'feature is already defined; returns false'() {
-				assert.isTrue(hasAdd(feature, true));
-				assert.isFalse(hasAdd(feature, false));
+			'throws when feature is already defined'() {
+				let err: Error;
+				assert.isTrue(hasAdd('abc', true));
+				try {
+					assert.isFalse(hasAdd('abc', false));
+				} catch (e) {
+					err = e;
+				}
+				assert.isTrue(err instanceof Error);
+				assert.equal('abc already exists and no overwrite flag was passed', err.message);
 			},
 
 			'feature names are lowercased'() {

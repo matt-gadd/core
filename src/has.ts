@@ -92,7 +92,7 @@ export function add(feature: string, value: TestResult | TestMethod, overwrite: 
 	feature = feature.toLowerCase();
 
 	if (exists(feature) && !overwrite) {
-		return false;
+		throw new Error(`${feature} already exists and no overwrite flag was passed`);
 	}
 
 	if (typeof value === 'function') {
@@ -118,7 +118,7 @@ export default function has(feature: string): TestResult {
 	feature = feature.toLowerCase();
 
 	if (!exists(feature)) {
-		throw new RangeError(`${feature} does not exist`);
+		throw new Error(`${feature} does not exist`);
 	}
 
 	if (testFunctions[feature]) {
