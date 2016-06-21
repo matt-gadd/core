@@ -138,7 +138,7 @@ registerSuite({
 				assert.equal('abc already exists and no overwrite flag was passed', err.message);
 			},
 
-			'feature names are lowercased'() {
+			'feature name is lowercased'() {
 				hasAdd('ABC', true);
 				assert.isTrue(has('abc'));
 			},
