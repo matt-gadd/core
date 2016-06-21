@@ -88,6 +88,9 @@ export function exists(feature: string): boolean {
  * @return if the feature test was successfully added
  */
 export function add(feature: string, value: TestResult | TestMethod, overwrite: boolean = false): boolean {
+
+	feature = feature.toLowerCase();
+
 	if (exists(feature) && !overwrite) {
 		return false;
 	}
@@ -111,6 +114,8 @@ export function add(feature: string, value: TestResult | TestMethod, overwrite: 
  */
 export default function has(feature: string): TestResult {
 	let result: any;
+
+	feature = feature.toLowerCase();
 
 	if (!exists(feature)) {
 		throw new RangeError(`${feature} does not exist`);

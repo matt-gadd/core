@@ -58,6 +58,11 @@ registerSuite({
 			assert.equal('abc does not exist', err.message);
 		},
 
+		'feature name is lowercased'() {
+			hasAdd('abc', true);
+			assert.isTrue(has('ABC'));
+		},
+
 		'has.cache': {
 			'basic true/false tests'() {
 				hasAdd('abc', true);
@@ -124,6 +129,11 @@ registerSuite({
 			'feature is already defined; returns false'() {
 				assert.isTrue(hasAdd(feature, true));
 				assert.isFalse(hasAdd(feature, false));
+			},
+
+			'feature names are lowercased'() {
+				hasAdd('ABC', true);
+				assert.isTrue(has('abc'));
 			},
 
 			overwrite: {
