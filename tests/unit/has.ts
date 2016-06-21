@@ -46,15 +46,24 @@ registerSuite({
 			}
 		},
 
+		'throws when no value in cache and no test'() {
+			const feature: string = 'abc';
+			let err: RangeError;
+			try {
+				has(feature);
+			} catch (e) {
+				err = e;
+			}
+			assert.isTrue(err instanceof RangeError);
+			assert.equal('abc does not exist', err.message);
+		},
+
 		'has.cache': {
 			'basic true/false tests'() {
 				hasAdd('abc', true);
 				assert.isTrue(hasCache['abc']);
 				hasAdd('def', false);
 				assert.isFalse(hasCache['def']);
-
-				delete hasCache['abc'];
-				assert.isUndefined(has('abc'), 'Feature should be undefined after being removed from cache');
 			},
 
 			'deferred feature test should not populate cache until evaluated'() {

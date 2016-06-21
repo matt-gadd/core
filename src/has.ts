@@ -112,6 +112,10 @@ export function add(feature: string, value: TestResult | TestMethod, overwrite: 
 export default function has(feature: string): TestResult {
 	let result: any;
 
+	if (!exists(feature)) {
+		throw new RangeError(`${feature} does not exist`);
+	}
+
 	if (testFunctions[feature]) {
 		result = cache[feature] = testFunctions[feature].call(null);
 		testFunctions[feature] = null;
