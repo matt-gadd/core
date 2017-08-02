@@ -45,6 +45,13 @@ const suite: any = {
 			});
 			modules.push({ value: 44 });
 			assert.sameDeepMembers(useDefault(modules), [ 42, 43, { value: 44 } ]);
+		},
+
+		'promise that resolves to a es6 module'() {
+			const myImport = Promise.resolve({ __esModule: true, default: 'foo' });
+			return useDefault(myImport).then((myDefault: string) => {
+				assert.equal(myDefault, 'foo');
+			});
 		}
 	}
 };

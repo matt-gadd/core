@@ -1,5 +1,6 @@
 import { forOf, isIterable, isArrayLike } from '@dojo/shim/iterator';
 import { Load } from '../load';
+import { isThenable } from '../async/Task';
 
 export interface LoadPlugin<T> {
 	/**
@@ -36,7 +37,10 @@ export function isPlugin(value: any): value is LoadPlugin<any> {
 export function useDefault(modules: any[]): any[];
 export function useDefault(module: any): any;
 export function useDefault(modules: any | any[]): any[] | any {
-	if (isIterable(modules) || isArrayLike(modules)) {
+	if (isThenable(modules)) {
+		return modules.then(useDefault);
+	}
+	else if (isIterable(modules) || isArrayLike(modules)) {
 		let processedModules: any[] = [];
 
 		forOf(modules, (module) => {
